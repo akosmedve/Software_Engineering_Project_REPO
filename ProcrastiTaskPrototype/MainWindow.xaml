@@ -1,0 +1,196 @@
+﻿<Window x:Class="ProcrastiTaskPrototype.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ProcrastiTask"
+        Height="600"
+        Width="1000">
+    <!-- button styling -->
+    <Window.Resources>
+
+        <Style x:Key="DarkPillButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="25"
+                                Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="#444444"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="#111111"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header /only placeholder-->
+        <TextBlock Grid.Row="0"
+                   Text="ProcrastiTask"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Margin="0,0,0,20"/>
+
+        <!-- Main content area (main grid)-->
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Task list (left)-->
+            <GroupBox Grid.Column="0"
+                      Header="Tasks">
+
+                <ListBox x:Name="TaskList"
+         SelectionChanged="TaskList_SelectionChanged">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TaskTitle}"
+                       FontSize="14">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="Black"/>
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TaskPriority}"
+                                         Value="tpHigh">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+
+            </GroupBox>
+
+            <!-- Task details area (right) -->
+            <GroupBox Grid.Column="2"
+                      Header="Task Details">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                    <StackPanel Margin="10">
+
+                        <TextBlock Text="Title"/>
+                        <TextBox x:Name="TitleTextBox"
+                                 Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Description"/>
+                        <TextBox x:Name="DescriptionTextBox"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Status"/>
+                        <ComboBox x:Name="StatusComboBox"
+                                  Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Priority"/>
+                        <ComboBox x:Name="PriorityComboBox"
+                                  Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Current Development State"/>
+                        <TextBox x:Name="CurrentStateTextBox"
+                                 Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Next Step"/>
+                        <TextBox x:Name="NextStepTextBox"
+                                 Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Source File"/>
+                        <TextBox x:Name="SourceFileTextBox"
+                                 Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Component"/>
+                        <TextBox x:Name="ComponentTextBox"
+                                 Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Git Branch"/>
+                        <TextBox x:Name="GitBranchTextBox"
+                                 Margin="0,5,0,15"/>
+
+                        <TextBlock Text="Technical Notes"/>
+                        <TextBox x:Name="TechnicalNotesTextBox"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 Margin="0,5,0,15"/>
+
+                    </StackPanel>
+
+                </ScrollViewer>
+
+            </GroupBox>
+
+        </Grid>
+
+        <!-- Buttons (all/ 3 for now) -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    Margin="0,20,0,0">
+
+            <Button Content="New Task"
+                     Style="{StaticResource DarkPillButtonStyle}"
+                    Margin="0,0,10,0"
+                    Click="NewTaskButton_Click"/>
+
+            <Button Content="Save"
+                    Style="{StaticResource DarkPillButtonStyle}"
+                    Margin="0,0,10,0"
+                    Click="SaveButton_Click"/>
+
+            <Button Content="Delete"
+                     Style="{StaticResource DarkPillButtonStyle}"
+                    Click="DeleteButton_Click"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>
